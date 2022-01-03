@@ -15,9 +15,8 @@ jdk-15.0.2
 ```
 see src/application.properities
 (CORS Has been processed at the front end code------see vue.config.js)
-so the follow can be deleted
-```
-```
+so the code following can be deleted
+
 CORS_ALLOWED_ORIGINS=http://localhost:8888,http://localhost:8080,http://localhost:55667,http://172.17.3.46:8082,http://172.17.3.46:8081,http://172.17.3.46:8080,http://10.33.93.199:8080,http://120.76.194.171,http://120.76.194.171:55667
 ```
 
