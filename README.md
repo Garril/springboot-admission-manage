@@ -6,6 +6,11 @@ The RearEnd Code of Admission_ManageSystem
 https://github.com/ZerviKuoc/Admission_ManageSystem
 ```
 
+### TestFile
+```
+see the test.rar
+```
+
 ### JDK
 ```
 jdk-15.0.2
