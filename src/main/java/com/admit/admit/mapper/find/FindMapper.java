@@ -101,24 +101,24 @@ public interface FindMapper {
 
 
     // 这两个是计算人数的，统计分班情况用
-    @Select("SELECT degree,dep_id,spe_id,class_id,\n" +
-            "  COUNT(m.sex  <= 1 OR NULL) boy,\n" +
-            "  COUNT(m.sex >= 2 OR NULL) girl\n" +
-            "FROM matriculated m\n" +
-            "WHERE m.degree = #{degree}\n" +
-            "AND dep_id =#{dep_id}")
-    @Transactional
-    ClassInfo findNumberDep(String degree,String dep_id);
-
-    @Select("SELECT degree,dep_id,spe_id,class_id,\n" +
-            "  COUNT(m.sex  <= 1 OR NULL) boy,\n" +
-            "  COUNT(m.sex >= 2 OR NULL) girl\n" +
-            "FROM matriculated m\n" +
-            "WHERE m.degree = #{degree}\n" +
-            "AND dep_id =#{dep_id}\n" +
-            "AND spe_id = #{spe_id}")
-    @Transactional
-    ClassInfo findNumberSep(String degree,String dep_id,String spe_id);
+//    @Select("SELECT degree,dep_id,spe_id,class_id,\n" +
+//            "  COUNT(m.sex  <= 1 OR NULL) boy,\n" +
+//            "  COUNT(m.sex >= 2 OR NULL) girl\n" +
+//            "FROM matriculated m\n" +
+//            "WHERE m.degree = #{degree}\n" +
+//            "AND dep_id =#{dep_id}")
+//    @Transactional
+//    ClassInfo findNumberDep(String degree,String dep_id);
+//
+//    @Select("SELECT degree,dep_id,spe_id,class_id,\n" +
+//            "  COUNT(m.sex  <= 1 OR NULL) boy,\n" +
+//            "  COUNT(m.sex >= 2 OR NULL) girl\n" +
+//            "FROM matriculated m\n" +
+//            "WHERE m.degree = #{degree}\n" +
+//            "AND dep_id =#{dep_id}\n" +
+//            "AND spe_id = #{spe_id}")
+//    @Transactional
+//    ClassInfo findNumberSep(String degree,String dep_id,String spe_id);
 
     // 找到所有的班级，查询分班情况，页面一开始加载时候用
     @Select("SELECT t.*,spe_dep.dep_name,spe_dep.spe_name\n" +

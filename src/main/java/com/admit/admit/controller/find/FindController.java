@@ -76,13 +76,13 @@ public class FindController {
 
 
     // 统计分班信息改
-    @GetMapping("/countByDepSpe")
-    public ClassInfo findNumBySpe(@RequestParam String degree,@RequestParam String dep_id,@RequestParam String spe_id){
-        if(spe_id.equals("@")) {
-            return findMapper.findNumberDep(degree,dep_id);
-        }
-        return findMapper.findNumberSep(degree,dep_id,spe_id);
-    }
+//    @GetMapping("/countByDepSpe")
+//    public ClassInfo findNumBySpe(@RequestParam String degree,@RequestParam String dep_id,@RequestParam String spe_id){
+//        if(spe_id.equals("@")) {
+//            return findMapper.findNumberDep(degree,dep_id);
+//        }
+//        return findMapper.findNumberSep(degree,dep_id,spe_id);
+//    }
 
 
     // 找到对应班级所有的学生，在查询分班信息里面用
