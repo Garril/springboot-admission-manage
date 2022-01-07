@@ -110,22 +110,20 @@ public class StudentListener extends AnalysisEventListener<Student> {
         }
 
         if(rightClass ==null) {
-            System.out.println(stuInfo.getId()+"没有找到合适的班级");
-        }
-
-        count = Integer.parseInt(rightClass.getGirl()) + Integer.parseInt(rightClass.getBoy()) + 1;
-        if(count<=9) {
-            sno = stuInfo.getDegree()+stuInfo.getSex()+ stuInfo.getYear().substring(2,4) +
-                    stuInfo.getDep_id() + stuInfo.getSpe_id() + rightClass.getClass_no() + "0"+count;
+            System.out.println(stuInfo.getId() + "没有找到合适的班级");
         } else {
-            sno = stuInfo.getDegree()+stuInfo.getSex()+ stuInfo.getYear().substring(2,4) +
-                    stuInfo.getDep_id() + stuInfo.getSpe_id() + rightClass.getClass_no() + count;
-        }
+            count = Integer.parseInt(rightClass.getGirl()) + Integer.parseInt(rightClass.getBoy()) + 1;
 
-        this.importMapper.insertst(stuInfo.getId(),stuInfo.getName(),stuInfo.getDegree(),
-                stuInfo.getSex(),stuInfo.getDep_id(),stuInfo.getSpe_id(),stuInfo.getYear(),sno,rightClass.getId(),count);
-        if(stuInfo.getUrl()!=null) {
-            importMapper.InsertAvatar(sno,stuInfo.getUrl());
+            if(count<=9) {
+                sno = stuInfo.getDegree()+stuInfo.getSex()+ stuInfo.getYear().substring(2,4) +
+                        stuInfo.getDep_id() + stuInfo.getSpe_id() + rightClass.getClass_no() + "0"+count;
+            } else {
+                sno = stuInfo.getDegree()+stuInfo.getSex()+ stuInfo.getYear().substring(2,4) +
+                        stuInfo.getDep_id() + stuInfo.getSpe_id() + rightClass.getClass_no() + count;
+            }
+
+            this.importMapper.insertst(stuInfo.getId(),stuInfo.getName(),stuInfo.getDegree(),
+                    stuInfo.getSex(),stuInfo.getDep_id(),stuInfo.getSpe_id(),stuInfo.getYear(),sno,rightClass.getId(),count,stuInfo.getUrl());
         }
     }
 

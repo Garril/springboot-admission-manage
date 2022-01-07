@@ -12,19 +12,17 @@ import java.util.List;
 public interface FindMapper {
 
     // 3.1.1 sno查信息
-    @Select("SELECT m.*,class.class_no,class.class_name,s.dep_name,s.spe_name,avatar.url,s.campus\n" +
+    @Select("SELECT m.*,class.class_no,class.class_name,s.dep_name,s.spe_name,s.campus\n" +
             "FROM\n" +
             "(SELECT * FROM matriculated WHERE matriculated.sno = #{sno} ) AS m\n" +
-            "LEFT JOIN avatar ON avatar.sno = m.sno\n" +
             "LEFT JOIN class ON m.class_id = class.id\n" +
             "LEFT JOIN spe_dep s ON m.spe_id = s.spe_id AND m.dep_id = s.dep_id")
     StuInfo findStuBySno(String sno);
 
     // 3.1.2 id查信息
-    @Select("SELECT m.*,class.class_no,class.class_name,s.dep_name,s.spe_name,avatar.url,s.campus\n" +
+    @Select("SELECT m.*,class.class_no,class.class_name,s.dep_name,s.spe_name,s.campus\n" +
             "FROM\n" +
             "(SELECT * FROM matriculated WHERE matriculated.id = #{id} ) AS m\n" +
-            "LEFT JOIN avatar ON avatar.sno = m.sno\n" +
             "LEFT JOIN class ON m.class_id = class.id\n" +
             "LEFT JOIN spe_dep s ON m.spe_id = s.spe_id AND m.dep_id = s.dep_id\n")
     StuInfo findStuById(String id);
@@ -83,7 +81,7 @@ public interface FindMapper {
 
 
     //    找到对应班级的所有学生，联级选项用到
-    @Select("SELECT t.*,tt.spe_name,tt.dep_name,tt.campus,a.url\n" +
+    @Select("SELECT t.*,tt.spe_name,tt.dep_name,tt.campus\n" +
             "FROM (\n" +
             "\tSELECT m.*,class.class_no,class.class_name\n" +
             "\tFROM matriculated AS m,class\n" +
@@ -94,9 +92,7 @@ public interface FindMapper {
             "\tAND m.spe_id = #{spe_id}\n" +
             "\t) AS t\n" +
             "LEFT JOIN spe_dep AS tt\n" +
-            "ON tt.dep_id = t.dep_id AND tt.spe_id = t.spe_id\n" +
-            "LEFT JOIN avatar AS a \n" +
-            "ON a.sno = t.sno")
+            "ON tt.dep_id = t.dep_id AND tt.spe_id = t.spe_id")
     List<StuInfo> findClassAllStu(String degree, String dep_id, String spe_id, String class_no);
 
 
@@ -133,11 +129,10 @@ public interface FindMapper {
     List<ClassInfo> getAllClass();
 
     // 找到所有学生。界面初始显示
-    @Select("SELECT m.*,class.class_no,class.class_name,s.dep_name,s.spe_name,s.campus,avatar.url\n" +
-            "    FROM matriculated AS m,class,spe_dep AS s,avatar\n" +
+    @Select("SELECT m.*,class.class_no,class.class_name,s.dep_name,s.spe_name,s.campus\n" +
+            "    FROM matriculated AS m,class,spe_dep AS s\n" +
             "    WHERE m.class_id = class.id\n" +
             "    AND m.dep_id = s.dep_id\n" +
-            "    AND m.spe_id = s.spe_id \n" +
-            "    AND m.sno = avatar.sno;")
+            "    AND m.spe_id = s.spe_id \n")
     List<StuInfo> findAllStu();
 }

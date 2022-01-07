@@ -80,6 +80,9 @@ public class ImportController {
                 rightClass = classInfo; // 拿到合适的班级信息
             }
         }
+        if(rightClass==null) {
+            return "导入失败,不存在班级";
+        }
         int count = Integer.parseInt(rightClass.getGirl())+Integer.parseInt(rightClass.getBoy())+1;
         String sno;
         if(count<=9) {
@@ -89,12 +92,14 @@ public class ImportController {
             sno = stuInfo.getDegree()+stuInfo.getSex()+ stuInfo.getYear().substring(2,4) +
                     stuInfo.getDep_id() + stuInfo.getSpe_id() + rightClass.getClass_no() + count;
         }
-        importMapper.UpdateSno(stuInfo.getId(),sno,stuInfo.getName(),stuInfo.getDegree(),stuInfo.getSex(),stuInfo.getDep_id(),
-                stuInfo.getSpe_id(),rightClass.getId(),count,stuInfo.getYear());
-        if(stuInfo.getUrl()!=null) {
-            importMapper.InsertAvatar(sno,stuInfo.getUrl());
+        try {
+            importMapper.UpdateSno(stuInfo.getId(),sno,stuInfo.getName(),stuInfo.getDegree(),stuInfo.getSex(),stuInfo.getDep_id(),
+                    stuInfo.getSpe_id(),rightClass.getId(),count,stuInfo.getYear(),stuInfo.getUrl());
+        } catch (Exception e) {
+            System.out.println(e);
+            return "导入学生信息失败";
         }
-        return "success";
+        return "导入学生信息成功";
     }
 
     @PostMapping("/class")

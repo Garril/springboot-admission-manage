@@ -34,10 +34,10 @@ public interface ImportMapper {
             "WHERE class.dep_id = #{dep_id} AND class.spe_id = #{spe_id} AND degree =#{degree}")
     List<ClassInfo> ForCreateSno(String dep_id, String spe_id, String degree);
 
-    @Insert("INSERT INTO matriculated(id,sno,NAME,degree,sex,dep_id,spe_id,class_id,number,YEAR) " +
-            "VALUES(#{id},#{sno},#{name},#{degree},#{sex},#{dep_id},#{spe_id},#{class_id},#{number},#{year})")
+    @Insert("INSERT INTO matriculated(id,sno,NAME,degree,sex,dep_id,spe_id,class_id,number,YEAR,url) " +
+            "VALUES(#{id},#{sno},#{name},#{degree},#{sex},#{dep_id},#{spe_id},#{class_id},#{number},#{year},#{url})")
     @Transactional
-    int UpdateSno(String id,String sno,String name,String degree,String sex,String dep_id,String spe_id,String class_id,int number,String year);
+    int UpdateSno(String id,String sno,String name,String degree,String sex,String dep_id,String spe_id,String class_id,int number,String year,String url);
 
     @Insert("INSERT INTO avatar(sno,url) values(#{sno},#{url})")
     void InsertAvatar(String sno, String url);
@@ -45,9 +45,9 @@ public interface ImportMapper {
     @Insert("INSERT INTO class(degree,YEAR,dep_id,spe_id,class_no,class_name) VALUE(#{degree},#{year},#{dep_id},#{spe_id},#{class_no},#{class_name})")
     void InsertNewClass(String degree, String year, String dep_id, String spe_id, String class_no, String class_name);
 
-    @Insert("INSERT INTO matriculated(id,sno,NAME,degree,sex,dep_id,spe_id,class_id,number,YEAR) VALUES(#{id},#{sno},#{name},#{degree},#{sex},#{dep_id},#{spe_id},#{class_id},#{number},#{year});")
+    @Insert("INSERT INTO matriculated(id,sno,NAME,degree,sex,dep_id,spe_id,class_id,number,YEAR,url) VALUES(#{id},#{sno},#{name},#{degree},#{sex},#{dep_id},#{spe_id},#{class_id},#{number},#{year},#{url});")
     @Transactional
-    int insertst(String id,String name,String degree,String sex,String dep_id,String spe_id,String year,String sno,String class_id,int number);
+    int insertst(String id,String name,String degree,String sex,String dep_id,String spe_id,String year,String sno,String class_id,int number,String url);
 
     @Insert("INSERT INTO class(spe_id,class_no,degree,class_name,dep_id,YEAR) VALUES (#{spe_id},#{class_no},#{degree},#{class_name},#{dep_id},#{year});")
     @Transactional
