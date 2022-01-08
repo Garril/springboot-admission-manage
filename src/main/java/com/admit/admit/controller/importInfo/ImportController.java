@@ -114,11 +114,11 @@ public class ImportController {
         try{
             List<Spe> allSpe = findMapper.findAllSpe();
             InputStream inputStream = file.getInputStream();
-            EasyExcel.read(inputStream, Student.class,new com.admit.admit.listener.StudentListener(findMapper,new Random(),new HashMap<String,String>(),new HashMap<String,Integer>(),allSpe,importMapper)).sheet().doRead();
+            EasyExcel.read(inputStream, Student.class,new com.admit.admit.listener.StudentListener(findMapper,new HashMap<String,String>(),new HashMap<String,Integer>(),allSpe,importMapper)).sheet().doRead();
         }catch (Exception e) {
-//            System.out.println(e);
+            return e.getMessage();
         }
-        return "success";
+        return "导入学生成功";
     }
 
     // excel 导入班级
@@ -128,9 +128,9 @@ public class ImportController {
             InputStream inputStream = file.getInputStream();
             EasyExcel.read(inputStream, ClassExcel.class,new com.admit.admit.listener.ClassListener(importMapper)).sheet().doRead();
         }catch (Exception e) {
-//            System.out.println(e);
+            return e.getMessage();
         }
-        return "success";
+        return "导入班级成功";
     }
 
 

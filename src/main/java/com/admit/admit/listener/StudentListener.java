@@ -11,10 +11,8 @@ import com.alibaba.excel.event.AnalysisEventListener;
 
 
 import javax.annotation.Resource;
-import java.util.Calendar;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Random;
+import java.sql.SQLException;
+import java.util.*;
 
 
 //监听，在这里插入学生
@@ -22,11 +20,11 @@ import java.util.Random;
 public class StudentListener extends AnalysisEventListener<Student> {
     private FindMapper findMapper;
     private ImportMapper importMapper;
-    private Random random;
     private HashMap<String,String> depHashMap;
     private HashMap<String,Integer> speHashMap;
     private List<Spe> allSpe;
 
+    private final double sexRate = 0.65;
 
     public static String getSysYear() {
         Calendar date = Calendar.getInstance();
@@ -35,9 +33,8 @@ public class StudentListener extends AnalysisEventListener<Student> {
     }
 
 
-    public StudentListener(FindMapper findMapper, Random random, HashMap<String, String> depHashMap, HashMap<String, Integer> speHashMap, List<Spe> allSpe,ImportMapper importMapper){
+    public StudentListener(FindMapper findMapper, HashMap<String, String> depHashMap, HashMap<String, Integer> speHashMap, List<Spe> allSpe,ImportMapper importMapper){
         this.findMapper = findMapper;
-        this.random = random;
         this.depHashMap = depHashMap;
         this.speHashMap = speHashMap;
         this.allSpe = allSpe;
@@ -59,7 +56,15 @@ public class StudentListener extends AnalysisEventListener<Student> {
     public void invoke(Student st, AnalysisContext analysisContext) {
         String dep_id = this.depHashMap.get(st.getDep());
         String spe_id = String.valueOf(this.speHashMap.get(st.getSpe()));
-        String r = String.valueOf((this.random.nextInt(2)+1));
+        double rSign = Math.random();
+        String r;
+        if(rSign <= sexRate) { // 65%男
+            r = "1";
+        } else { // 35%女
+            r = "2";
+        }
+
+//        String r = String.valueOf((this.random.nextInt(2)+1));
         StuInfo stuInfo = new StuInfo(st.getNumber(),st.getName(),"3",r,dep_id,spe_id,getSysYear());
 
         String degree = stuInfo.getDegree();
@@ -73,7 +78,7 @@ public class StudentListener extends AnalysisEventListener<Student> {
 
         // 拿到要分的班级列表
         List<ClassInfo> classInfos = this.importMapper.ForCreateSno(dep_id, spe_id, degree);
-
+        Collections.shuffle(classInfos);
         for(ClassInfo classInfo: classInfos) {
             if(classInfo.getBoy()==null) {
                 classInfo.setBoy("0");
@@ -91,14 +96,14 @@ public class StudentListener extends AnalysisEventListener<Student> {
             if(Integer.parseInt(stuInfo.getSex())==2) { // 是女孩
                 stuInfo.setUrl("D:\\Front end\\DB_Project\\view\\admit\\src\\assets\\avatar\\2.png");
                 if(boy==0&&girl==0) {
-                    rate = 0;
+                    rate = 2;
                 } else {
                     rate = boy/girl; // 男女比例, 最大代表男孩子相对女孩子更多
                 }
             } else { // 男孩
                 stuInfo.setUrl("D:\\Front end\\DB_Project\\view\\admit\\src\\assets\\avatar\\1.png");
                 if(boy==0&&girl==0) {
-                    rate = 0;
+                    rate = 2;
                 } else {
                     rate = girl/boy; // 男女比例，最大代表女孩子相对男孩子更多
                 }
@@ -110,7 +115,7 @@ public class StudentListener extends AnalysisEventListener<Student> {
         }
 
         if(rightClass ==null) {
-            System.out.println(stuInfo.getId() + "没有找到合适的班级");
+            throw(new Error("没有找到合适的班级"));
         } else {
             count = Integer.parseInt(rightClass.getGirl()) + Integer.parseInt(rightClass.getBoy()) + 1;
 
