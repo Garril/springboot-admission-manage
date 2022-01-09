@@ -127,8 +127,12 @@ public class StudentListener extends AnalysisEventListener<Student> {
                         stuInfo.getDep_id() + stuInfo.getSpe_id() + rightClass.getClass_no() + count;
             }
 
-            this.importMapper.insertst(stuInfo.getId(),stuInfo.getName(),stuInfo.getDegree(),
-                    stuInfo.getSex(),stuInfo.getDep_id(),stuInfo.getSpe_id(),stuInfo.getYear(),sno,rightClass.getId(),count,stuInfo.getUrl());
+            try {
+                this.importMapper.insertst(stuInfo.getId(),stuInfo.getName(),stuInfo.getDegree(),
+                        stuInfo.getSex(),stuInfo.getDep_id(),stuInfo.getSpe_id(),stuInfo.getYear(),sno,rightClass.getId(),count,stuInfo.getUrl());
+            }catch (Exception e) {
+//                System.out.println(e);
+            }
         }
     }
 

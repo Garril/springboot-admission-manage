@@ -34,7 +34,11 @@ public class ClassListener extends AnalysisEventListener<ClassExcel> {
 
     @Override
     public void invoke(ClassExcel classExcel, AnalysisContext analysisContext) {
-        this.importMapper.insertClass(classExcel.getSpe_id(),classExcel.getClass_no(),classExcel.getDegree(),classExcel.getClass_name(),classExcel.getDep_id(),classExcel.getYear());
+        try {
+            this.importMapper.insertClass(classExcel.getSpe_id(),classExcel.getClass_no(),classExcel.getDegree(),classExcel.getClass_name(),classExcel.getDep_id(),classExcel.getYear());
+        } catch(Exception e) {
+//            System.out.println(e);
+        }
     }
 
     @Override

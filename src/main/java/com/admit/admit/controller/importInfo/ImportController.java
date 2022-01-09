@@ -96,7 +96,6 @@ public class ImportController {
             importMapper.UpdateSno(stuInfo.getId(),sno,stuInfo.getName(),stuInfo.getDegree(),stuInfo.getSex(),stuInfo.getDep_id(),
                     stuInfo.getSpe_id(),rightClass.getId(),count,stuInfo.getYear(),stuInfo.getUrl());
         } catch (Exception e) {
-            System.out.println(e);
             return "导入学生信息失败";
         }
         return "导入学生信息成功";
