@@ -96,14 +96,18 @@ public class ImportController {
             importMapper.UpdateSno(stuInfo.getId(),sno,stuInfo.getName(),stuInfo.getDegree(),stuInfo.getSex(),stuInfo.getDep_id(),
                     stuInfo.getSpe_id(),rightClass.getId(),count,stuInfo.getYear(),stuInfo.getUrl());
         } catch (Exception e) {
-            return "导入学生信息失败";
+            return "学生已经存在，导入学生信息失败";
         }
         return "导入学生信息成功";
     }
 
     @PostMapping("/class")
     public String findClass(@RequestBody ClassInfo classInfo) {
-        importMapper.InsertNewClass(classInfo.getDegree(),classInfo.getYear(),classInfo.getDep_id(),classInfo.getSpe_id(),classInfo.getClass_no(),classInfo.getClass_name());
+        try {
+            importMapper.InsertNewClass(classInfo.getDegree(),classInfo.getYear(),classInfo.getDep_id(),classInfo.getSpe_id(),classInfo.getClass_no(),classInfo.getClass_name());
+        } catch (Exception e) {
+          return "班级已经存在，导入班级信息失败";
+        }
         return "success";
     }
 

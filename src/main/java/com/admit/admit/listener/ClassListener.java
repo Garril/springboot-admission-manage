@@ -37,6 +37,7 @@ public class ClassListener extends AnalysisEventListener<ClassExcel> {
         try {
             this.importMapper.insertClass(classExcel.getSpe_id(),classExcel.getClass_no(),classExcel.getDegree(),classExcel.getClass_name(),classExcel.getDep_id(),classExcel.getYear());
         } catch(Exception e) {
+            throw(new Error("导入班级列表格式有误"));
 //            System.out.println(e);
         }
     }
